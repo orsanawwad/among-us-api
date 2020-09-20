@@ -1,10 +1,10 @@
-package me.nullicorn.amongus.matchmaker;
+package me.nullicorn.amongus;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.matchmaker.packet.MatchmakerPacket;
+import me.nullicorn.amongus.packet.MatchmakerPacket;
 import me.nullicorn.amongus.util.HexUtil;
 
 /**

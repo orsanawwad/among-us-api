@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.matchmaker;
+package me.nullicorn.amongus;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

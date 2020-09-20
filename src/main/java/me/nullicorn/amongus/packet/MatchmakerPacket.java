@@ -1,8 +1,8 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
+import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.MatchmakerProtocol;
 import me.nullicorn.amongus.api.Packet;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
-import me.nullicorn.amongus.matchmaker.MatchmakerProtocol;
 
 /**
  * A packet for the {@link MatchmakerProtocol}

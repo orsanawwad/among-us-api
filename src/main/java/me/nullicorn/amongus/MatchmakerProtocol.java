@@ -1,16 +1,16 @@
-package me.nullicorn.amongus.matchmaker;
+package me.nullicorn.amongus;
 
 import java.util.HashMap;
 import java.util.Map;
 import lombok.SneakyThrows;
 import me.nullicorn.amongus.api.Protocol;
 import me.nullicorn.amongus.api.ProtocolException;
-import me.nullicorn.amongus.matchmaker.packet.ClientboundMatchmakerList;
-import me.nullicorn.amongus.matchmaker.packet.Disconnect;
-import me.nullicorn.amongus.matchmaker.packet.Hearbeat;
-import me.nullicorn.amongus.matchmaker.packet.HearbeatAck;
-import me.nullicorn.amongus.matchmaker.packet.MatchmakerPacket;
-import me.nullicorn.amongus.matchmaker.packet.ServerboundHello;
+import me.nullicorn.amongus.packet.ClientboundMatchmakerList;
+import me.nullicorn.amongus.packet.Disconnect;
+import me.nullicorn.amongus.packet.Hearbeat;
+import me.nullicorn.amongus.packet.HearbeatAck;
+import me.nullicorn.amongus.packet.MatchmakerPacket;
+import me.nullicorn.amongus.packet.ServerboundHello;
 
 /**
  * The protocol for communication with Among Us' matchmaking servers

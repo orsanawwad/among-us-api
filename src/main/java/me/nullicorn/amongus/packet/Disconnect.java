@@ -1,8 +1,8 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
+import me.nullicorn.amongus.MatchmakerClient;
 
 /**
  * A bidirectional packet that tells the receiver that the sender is disconnecting

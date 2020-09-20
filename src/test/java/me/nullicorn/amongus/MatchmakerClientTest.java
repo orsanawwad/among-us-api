@@ -6,7 +6,6 @@ import java.net.SocketAddress;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
 
 /**
  * Used for debugging and testing of {@link MatchmakerClient}

@@ -1,10 +1,10 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
+import me.nullicorn.amongus.MatchmakerClient;
 
 /**
  * A bidirectional packet that ACKnowledges that is sent in response to a {@link Hearbeat}. This lets the receiver know that the sender is still
@@ -15,11 +15,6 @@ import me.nullicorn.amongus.matchmaker.MatchmakerClient;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HearbeatAck implements MatchmakerPacket {
-
-  /*
-  ========== PACKET STRUCTURE ==========
-   - 2 byte: Nonce; must be the same as one sent in a Heartbeat packet
-   */
 
   @Getter
   private short nonce;

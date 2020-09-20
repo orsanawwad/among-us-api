@@ -1,9 +1,9 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.nio.charset.StandardCharsets;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
+import me.nullicorn.amongus.MatchmakerClient;
 
 /**
  * Sent to the server to set the client's username. This also doubles as the first {@link Hearbeat} packet.
@@ -12,15 +12,6 @@ import me.nullicorn.amongus.matchmaker.MatchmakerClient;
  */
 @NoArgsConstructor
 public class ServerboundHello extends Hearbeat {
-
-  /*
-  ========== PACKET STRUCTURE ==========
-   - 2 byte:  Nonce, same as in Heartbeat
-   - 5 bytes: UNKNOWN; Example: {0x00, 0x46, 0xD2, 0x02, 0x03}
-   - 1 byte:  The number of servers in the following list
-   - 1 byte:  Length of the player's username
-   - n bytes: ASCII encoding of the player's username (where n is the length from the previous field)
-   */
 
   // TODO: 9/18/20 Find out what these bytes actually mean
   private static final byte[] header = new byte[]{0x00, 0x46, (byte) 0xD2, 0x02, 0x03};

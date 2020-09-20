@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.matchmaker;
+package me.nullicorn.amongus;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

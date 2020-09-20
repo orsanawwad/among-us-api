@@ -1,11 +1,11 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
+import me.nullicorn.amongus.MatchmakerClient;
 
 /**
  * A bidirectional packet that tells the receiver to send a {@link HearbeatAck}. If the receiver sends an ACK back, then the sender can be sure that
@@ -16,11 +16,6 @@ import me.nullicorn.amongus.matchmaker.MatchmakerClient;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Hearbeat implements MatchmakerPacket {
-
-  /*
-  ========== PACKET STRUCTURE ==========
-   - 2 byte: Nonce; any number; must be sent back to the sender in an ACK
-   */
 
   @Getter
   protected short nonce;

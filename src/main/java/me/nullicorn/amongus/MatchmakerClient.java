@@ -1,16 +1,15 @@
-package me.nullicorn.amongus.matchmaker;
+package me.nullicorn.amongus;
 
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.DatagramChannel;
 import java.util.Timer;
 import java.util.TimerTask;
-import me.nullicorn.amongus.AmongUsUDPClient;
 import me.nullicorn.amongus.api.Protocol;
-import me.nullicorn.amongus.matchmaker.packet.Disconnect;
-import me.nullicorn.amongus.matchmaker.packet.Hearbeat;
-import me.nullicorn.amongus.matchmaker.packet.HearbeatAck;
-import me.nullicorn.amongus.matchmaker.packet.MatchmakerPacket;
-import me.nullicorn.amongus.matchmaker.packet.ServerboundHello;
+import me.nullicorn.amongus.packet.Disconnect;
+import me.nullicorn.amongus.packet.Hearbeat;
+import me.nullicorn.amongus.packet.HearbeatAck;
+import me.nullicorn.amongus.packet.MatchmakerPacket;
+import me.nullicorn.amongus.packet.ServerboundHello;
 
 /**
  * A client capable of connecting to Among Us' matchmaking servers

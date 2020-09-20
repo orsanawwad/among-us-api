@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.matchmaker.packet;
+package me.nullicorn.amongus.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.net.InetSocketAddress;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.matchmaker.MatchmakerClient;
-import me.nullicorn.amongus.matchmaker.data.MatchServerMeta;
+import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.data.MatchServerMeta;
 
 /**
  * Sent to the client to tell it what matchmaker servers are available
@@ -18,20 +18,6 @@ import me.nullicorn.amongus.matchmaker.data.MatchServerMeta;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientboundMatchmakerList implements MatchmakerPacket {
-
-  /*
-  ========== PACKET STRUCTURE ==========
-   - 1 byte:  Length of the remaining data minus 2
-   - 3 bytes: Unknown (00 0E 01)
-   - 1 byte:  The number of servers in the following list
-   - List of matchmaking servers. For each server:
-        - 1 byte:  UNKNOWN; Seems to always be 0x11
-        - 3 bytes: Length of the server's name
-        - n bytes: ASCII encoding of the server's name (where n is the length from the previous field)
-        - 4 bytes: The server's IPv4 address
-        - 2 bytes: The server's port (little endian)
-        - 2 bytes: UNKNOWN; Examples: {63 47}, {9D 08}, {D2 05}, {A6 05}, {E6 05}, {EE 06}, {83 07}
-   */
 
   private List<MatchServerMeta> servers;
 

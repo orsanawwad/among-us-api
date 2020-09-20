@@ -1,8 +1,8 @@
-package me.nullicorn.amongus.matchmaker.data;
+package me.nullicorn.amongus.data;
 
 import java.net.SocketAddress;
 import lombok.Getter;
-import me.nullicorn.amongus.matchmaker.packet.ClientboundMatchmakerList;
+import me.nullicorn.amongus.packet.ClientboundMatchmakerList;
 
 /**
  * Metadata for a matchmaker server (sent in {@link ClientboundMatchmakerList})
