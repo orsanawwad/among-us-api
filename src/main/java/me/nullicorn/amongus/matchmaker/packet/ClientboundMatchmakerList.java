@@ -24,12 +24,13 @@ public class ClientboundMatchmakerList implements MatchmakerPacket {
    - 1 byte:  Length of the remaining data minus 2
    - 3 bytes: Unknown (00 0E 01)
    - 1 byte:  The number of servers in the following list
-   - List of matchmaking servers:
+   - List of matchmaking servers. For each server:
         - 1 byte:  UNKNOWN; Seems to always be 0x11
         - 3 bytes: Length of the server's name
         - n bytes: ASCII encoding of the server's name (where n is the length from the previous field)
         - 4 bytes: The server's IPv4 address
-        - 4 bytes: UNKNOWN; Examples: {C6 3A 63 47}, {07 56 9D 08}, {07 56 D2 05}, {07 56 A6 05}, {07 56 E6 05}, {07 56 EE 06}, {07 56 83 07}
+        - 2 bytes: The server's port (little endian)
+        - 2 bytes: UNKNOWN; Examples: {63 47}, {9D 08}, {D2 05}, {A6 05}, {E6 05}, {EE 06}, {83 07}
    */
 
   private List<MatchServerMeta> servers;
@@ -45,9 +46,10 @@ public class ClientboundMatchmakerList implements MatchmakerPacket {
       int nameLength = in.readMedium();
       String name = in.readCharSequence(nameLength, StandardCharsets.US_ASCII).toString();
       String address = in.readUnsignedByte() + "." + in.readUnsignedByte() + "." + in.readUnsignedByte() + "." + in.readUnsignedByte();
-      in.skipBytes(4);
+      int port = in.readShortLE();
+      in.skipBytes(2);
 
-      servers.add(new MatchServerMeta(name, new InetSocketAddress(address, 22023)));
+      servers.add(new MatchServerMeta(name, new InetSocketAddress(address, port)));
     }
   }
 
