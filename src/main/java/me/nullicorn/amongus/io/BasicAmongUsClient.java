@@ -1,30 +1,34 @@
-package me.nullicorn.amongus;
+package me.nullicorn.amongus.io;
 
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.DatagramChannel;
 import java.util.Timer;
 import java.util.TimerTask;
-import me.nullicorn.amongus.api.Protocol;
-import me.nullicorn.amongus.packet.Disconnect;
-import me.nullicorn.amongus.packet.Hearbeat;
-import me.nullicorn.amongus.packet.HearbeatAck;
-import me.nullicorn.amongus.packet.MatchmakerPacket;
-import me.nullicorn.amongus.packet.ServerboundHello;
+import me.nullicorn.amongus.api.io.Protocol;
+import me.nullicorn.amongus.io.packet.Acknowledgement;
+import me.nullicorn.amongus.io.packet.Disconnect;
+import me.nullicorn.amongus.io.packet.Hearbeat;
+import me.nullicorn.amongus.io.packet.Login;
+import me.nullicorn.amongus.io.packet.UDPPacket;
+import me.nullicorn.amongus.io.pipeline.ExceptionHandler;
+import me.nullicorn.amongus.io.pipeline.PacketDecoder;
+import me.nullicorn.amongus.io.pipeline.PacketEncoder;
+import me.nullicorn.amongus.io.pipeline.UDPContentDecoder;
 
 /**
- * A client capable of connecting to Among Us' matchmaking servers
+ * A basic client capable of connecting to Among Us servers
  *
  * @author Nullicorn
  */
-public class MatchmakerClient extends AmongUsUDPClient {
+public class BasicAmongUsClient extends AmongUsUDPClient {
 
-  private static final MatchmakerProtocol protocol            = new MatchmakerProtocol();
-  private static final String             ENCODER             = "encoder";
-  private static final String             DECODER             = "decoder";
-  private static final String             EXCEPTION_HANDLER   = "exception-handler";
-  private static final String             UDP_CONTENT_DECODER = "udp-decoder";
-  private static final long               HEARTBEAT_INTERVAL  = 1500L;
-  private static final int                MAX_ACKS_MISSED     = 9;
+  private static final AmongUsProtocol protocol            = new AmongUsProtocol();
+  private static final String          ENCODER             = "encoder";
+  private static final String          DECODER             = "decoder";
+  private static final String          EXCEPTION_HANDLER   = "exception-handler";
+  private static final String          UDP_CONTENT_DECODER = "udp-decoder";
+  private static final long            HEARTBEAT_INTERVAL  = 1500L;
+  private static final int             MAX_ACKS_MISSED     = 9;
 
   private final String  username;
   private       Timer   heartbeatTimer;
@@ -32,20 +36,20 @@ public class MatchmakerClient extends AmongUsUDPClient {
   private       boolean receivedLastAck        = false;
   private       int     acksMissed             = 0;
 
-  public MatchmakerClient(String username) {
+  public BasicAmongUsClient(String username) {
     this.username = username;
   }
 
   @Override
-  public Protocol<MatchmakerPacket> getProtocol() {
+  public Protocol<UDPPacket> getProtocol() {
     return protocol;
   }
 
   @Override
   protected void initChannel(DatagramChannel ch) {
     ch.pipeline().addLast(UDP_CONTENT_DECODER, new UDPContentDecoder());
-    ch.pipeline().addLast(DECODER, new MMPacketDecoder(this));
-    ch.pipeline().addLast(ENCODER, new MMPacketEncoder(this));
+    ch.pipeline().addLast(DECODER, new PacketDecoder(this));
+    ch.pipeline().addLast(ENCODER, new PacketEncoder(this));
     ch.pipeline().addLast(EXCEPTION_HANDLER, new ExceptionHandler());
   }
 
@@ -60,12 +64,12 @@ public class MatchmakerClient extends AmongUsUDPClient {
 
   @Override
   protected void onConnected() {
-    sendPacket(new ServerboundHello(lastSentHeartbeatNonce++, username));
+    sendPacket(new Login(lastSentHeartbeatNonce++, username));
     heartbeatTimer = new Timer();
     heartbeatTimer.scheduleAtFixedRate(new HeartbeatTask(), HEARTBEAT_INTERVAL, HEARTBEAT_INTERVAL);
   }
 
-  public void onHeartbeatAck(HearbeatAck ack) {
+  public void onHeartbeatAck(Acknowledgement ack) {
     if (ack.getNonce() == lastSentHeartbeatNonce) {
       receivedLastAck = true;
       logger.finer("Received heartbeat ack");

@@ -1,15 +1,15 @@
-package me.nullicorn.amongus.packet;
+package me.nullicorn.amongus.io.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
- * A bidirectional packet that tells the receiver that the sender is disconnecting
+ * Tells the receiver that the sender is done listening for packets
  *
  * @author Nullicorn
  */
-public class Disconnect implements MatchmakerPacket {
+public class Disconnect implements UDPPacket {
 
   private static final Logger logger = Logger.getLogger(Disconnect.class.getSimpleName());
 
@@ -24,7 +24,7 @@ public class Disconnect implements MatchmakerPacket {
   }
 
   @Override
-  public void handle(MatchmakerClient client) {
+  public void handle(BasicAmongUsClient client) {
     if (!client.isConnected()) {
       client.disconnect();
     } else {

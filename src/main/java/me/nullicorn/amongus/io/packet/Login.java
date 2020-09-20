@@ -1,17 +1,18 @@
-package me.nullicorn.amongus.packet;
+package me.nullicorn.amongus.io.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.nio.charset.StandardCharsets;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
- * Sent to the server to set the client's username. This also doubles as the first {@link Hearbeat} packet.
+ * The very first packet sent to the server; contains the client's username.
  *
  * @author Nullicorn
  */
 @NoArgsConstructor
-public class ServerboundHello extends Hearbeat {
+public class Login extends Hearbeat {
 
   // TODO: 9/18/20 Find out what these bytes actually mean
   private static final byte[] header = new byte[]{0x00, 0x46, (byte) 0xD2, 0x02, 0x03};
@@ -19,11 +20,12 @@ public class ServerboundHello extends Hearbeat {
   /**
    * The client player's username
    */
-  private String username;
+  @Getter
+  private String clientUsername;
 
-  public ServerboundHello(short nonce, String username) {
+  public Login(short nonce, String username) {
     super(nonce);
-    this.username = username;
+    this.clientUsername = username;
   }
 
   @Override
@@ -32,7 +34,7 @@ public class ServerboundHello extends Hearbeat {
     in.skipBytes(header.length);
 
     byte usernameLength = in.readByte();
-    this.username = in.readCharSequence(usernameLength, StandardCharsets.US_ASCII).toString();
+    this.clientUsername = in.readCharSequence(usernameLength, StandardCharsets.US_ASCII).toString();
   }
 
   @Override
@@ -40,19 +42,19 @@ public class ServerboundHello extends Hearbeat {
     out.writeShort(getNonce());
     out.writeBytes(header);
 
-    out.writeByte(username.length());
-    out.writeCharSequence(username, StandardCharsets.US_ASCII);
+    out.writeByte(clientUsername.length());
+    out.writeCharSequence(clientUsername, StandardCharsets.US_ASCII);
   }
 
   @Override
-  public void handle(MatchmakerClient client) {
+  public void handle(BasicAmongUsClient client) {
     // Not necessary; packet is serverbound only
   }
 
   @Override
   public String toString() {
     return "ServerboundHello{" +
-        "username='" + username + '\'' +
+        "username='" + clientUsername + '\'' +
         ", nonce=" + nonce +
         '}';
   }

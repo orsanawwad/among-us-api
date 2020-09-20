@@ -1,23 +1,29 @@
-package me.nullicorn.amongus.packet;
+package me.nullicorn.amongus.io.packet;
 
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
- * A bidirectional packet that ACKnowledges that is sent in response to a {@link Hearbeat}. This lets the receiver know that the sender is still
- * connected.
+ * Tells the other side that the {@link AckablePacket} with the matching nonce has been received
  *
  * @author Nullicorn
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class HearbeatAck implements MatchmakerPacket {
+public class Acknowledgement implements UDPPacket {
 
+  /**
+   * The nonce from the received packet
+   */
   @Getter
-  private short nonce;
+  private int nonce;
+
+  public Acknowledgement(AckablePacket original) {
+    this.nonce = original.getNonce();
+  }
 
   @Override
   public void deserialize(ByteBuf in) {
@@ -32,7 +38,7 @@ public class HearbeatAck implements MatchmakerPacket {
   }
 
   @Override
-  public void handle(MatchmakerClient client) {
+  public void handle(BasicAmongUsClient client) {
     client.onHeartbeatAck(this);
   }
 

@@ -6,9 +6,10 @@ import java.net.SocketAddress;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
- * Used for debugging and testing of {@link MatchmakerClient}
+ * Used for debugging and testing of {@link BasicAmongUsClient}
  *
  * @author Nullicorn
  */
@@ -28,6 +29,6 @@ public class MatchmakerClientTest {
     LogManager.getLogManager().readConfiguration(MatchmakerClientTest.class.getClassLoader().getResourceAsStream("logging.properties"));
 
     // Create & start the client
-    new MatchmakerClient(USERNAME).connect(SERVER_EUROPE_1);
+    new BasicAmongUsClient(USERNAME).connect(SERVER_EUROPE_1);
   }
 }

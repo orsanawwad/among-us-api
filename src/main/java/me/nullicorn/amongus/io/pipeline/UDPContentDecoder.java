@@ -1,4 +1,4 @@
-package me.nullicorn.amongus;
+package me.nullicorn.amongus.io.pipeline;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

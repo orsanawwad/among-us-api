@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.api;
+package me.nullicorn.amongus.api.io;
 
 import io.netty.channel.ChannelFuture;
 import java.net.SocketAddress;

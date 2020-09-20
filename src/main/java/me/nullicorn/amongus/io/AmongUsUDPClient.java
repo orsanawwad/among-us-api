@@ -1,4 +1,4 @@
-package me.nullicorn.amongus;
+package me.nullicorn.amongus.io;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -14,8 +14,8 @@ import io.netty.util.concurrent.GenericFutureListener;
 import java.net.SocketAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.api.AmongUsClient;
-import me.nullicorn.amongus.api.Packet;
+import me.nullicorn.amongus.api.io.AmongUsClient;
+import me.nullicorn.amongus.api.io.Packet;
 
 /**
  * A UDP client for connecting to Among Us servers
@@ -63,7 +63,7 @@ public abstract class AmongUsUDPClient extends ChannelInitializer<DatagramChanne
           .option(ChannelOption.SO_BROADCAST, true)
           .handler(this);
 
-      // Connect to the matchmaker
+      // Connect to the server
       ChannelFuture f = b.connect(addr).sync();
       this.channel = f.channel();
 

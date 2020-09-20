@@ -1,26 +1,27 @@
-package me.nullicorn.amongus;
+package me.nullicorn.amongus.io.pipeline;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 import java.util.logging.Logger;
-import me.nullicorn.amongus.api.Packet;
-import me.nullicorn.amongus.packet.MatchmakerPacket;
+import me.nullicorn.amongus.api.io.Packet;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
+import me.nullicorn.amongus.io.packet.UDPPacket;
 import me.nullicorn.amongus.util.HexUtil;
 
 /**
- * Deserializes {@link MatchmakerPacket}s
+ * Deserializes {@link UDPPacket}s
  *
  * @author Nullicorn
  */
-public class MMPacketDecoder extends ByteToMessageDecoder {
+public class PacketDecoder extends ByteToMessageDecoder {
 
-  private static final Logger logger = Logger.getLogger(MMPacketDecoder.class.getSimpleName());
+  private static final Logger logger = Logger.getLogger(PacketDecoder.class.getSimpleName());
 
-  private final MatchmakerClient client;
+  private final BasicAmongUsClient client;
 
-  public MMPacketDecoder(MatchmakerClient client) {
+  public PacketDecoder(BasicAmongUsClient client) {
     this.client = client;
   }
 
@@ -30,7 +31,7 @@ public class MMPacketDecoder extends ByteToMessageDecoder {
       logger.finest("Received data: " + HexUtil.byteBufToHex(in));
 
       byte packetId = in.readByte();
-      Packet<MatchmakerClient> packet = client.getProtocol().createPacketInstance(packetId);
+      Packet<BasicAmongUsClient> packet = client.getProtocol().createPacketInstance(packetId);
       packet.deserialize(in);
 
       logger.finest("Received packet: " + packet);

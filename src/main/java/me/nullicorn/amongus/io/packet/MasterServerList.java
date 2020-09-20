@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.packet;
+package me.nullicorn.amongus.io.packet;
 
 import io.netty.buffer.ByteBuf;
 import java.net.InetSocketAddress;
@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import me.nullicorn.amongus.MatchmakerClient;
-import me.nullicorn.amongus.data.MatchServerMeta;
+import me.nullicorn.amongus.data.MasterServerMeta;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
- * Sent to the client to tell it what matchmaker servers are available
+ * Tells the client what master servers are available to connect to
  *
  * @author Nullicorn
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientboundMatchmakerList implements MatchmakerPacket {
+public class MasterServerList implements UDPPacket {
 
-  private List<MatchServerMeta> servers;
+  private List<MasterServerMeta> servers;
 
   @Override
   public void deserialize(ByteBuf in) {
@@ -35,23 +35,23 @@ public class ClientboundMatchmakerList implements MatchmakerPacket {
       int port = in.readShortLE();
       in.skipBytes(2);
 
-      servers.add(new MatchServerMeta(name, new InetSocketAddress(address, port)));
+      servers.add(new MasterServerMeta(name, new InetSocketAddress(address, port)));
     }
   }
 
   @Override
   public void serialize(ByteBuf out) {
-    // TODO: 9/19/20 Add serializer for matchmaker list
+    // TODO: 9/19/20 Add serializer for server list
   }
 
   @Override
-  public void handle(MatchmakerClient client) {
-    // TODO: 9/19/20 Add handler for matchmaker list
+  public void handle(BasicAmongUsClient client) {
+    // TODO: 9/19/20 Add handler for server list
   }
 
   @Override
   public String toString() {
-    return "ClientboundMatchmakerList{" +
+    return "MasterServerList{" +
         "servers=" + servers +
         '}';
   }

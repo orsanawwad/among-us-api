@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.api;
+package me.nullicorn.amongus.api.io;
 
 /**
  * Thrown when a {@link Protocol} is violated

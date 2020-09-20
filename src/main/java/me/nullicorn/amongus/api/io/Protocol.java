@@ -1,4 +1,4 @@
-package me.nullicorn.amongus.api;
+package me.nullicorn.amongus.api.io;
 
 /**
  * A protocol for communication between an {@link AmongUsClient} and an Among Us server

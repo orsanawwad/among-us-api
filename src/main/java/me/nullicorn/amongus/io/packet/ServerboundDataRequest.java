@@ -1,7 +1,7 @@
-package me.nullicorn.amongus.packet;
+package me.nullicorn.amongus.io.packet;
 
 import io.netty.buffer.ByteBuf;
-import me.nullicorn.amongus.MatchmakerClient;
+import me.nullicorn.amongus.io.BasicAmongUsClient;
 
 /**
  * @author Nullicorn
@@ -45,7 +45,7 @@ public class ServerboundDataRequest extends Hearbeat {
   }
 
   @Override
-  public void handle(MatchmakerClient client) {
+  public void handle(BasicAmongUsClient client) {
 
   }
 }
