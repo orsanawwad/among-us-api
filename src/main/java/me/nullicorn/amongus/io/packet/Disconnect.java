@@ -25,7 +25,7 @@ public class Disconnect implements UDPPacket {
 
   @Override
   public void handle(BasicAmongUsClient client) {
-    if (!client.isConnected()) {
+    if (client.isConnected()) {
       client.disconnect();
     } else {
       logger.warning("Server sent disconnect packet (0x09) when client was already disconnected");
