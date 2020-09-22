@@ -17,7 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import me.nullicorn.amongus.client.api.AmongUsClient;
 import me.nullicorn.amongus.server.api.AmongUsServer;
-import me.nullicorn.amongus.util.HexUtil;
 
 /**
  * Used to let other _Among Us_ clients on a LAN know that an _Among Us_ game is available to join on the current machine.
@@ -127,8 +126,6 @@ public class LANBroadcaster extends ChannelInboundHandlerAdapter {
       ByteBuf out = Unpooled.buffer(2 + b.length());
       out.writeShortLE(516);
       out.writeCharSequence(b, StandardCharsets.UTF_8);
-
-      System.out.println(HexUtil.byteBufToHex(out));
       return out;
     }
   }
