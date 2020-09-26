@@ -12,11 +12,6 @@ import me.nullicorn.amongus.protocol.common.api.packet.Packet;
  */
 public abstract class DataPacket implements Packet {
 
-  @Override
-  public boolean isReliable() {
-    return isReliable;
-  }
-
   protected boolean isReliable;
 
   public DataPacket(boolean isReliable) {
@@ -24,6 +19,11 @@ public abstract class DataPacket implements Packet {
   }
 
   abstract PayloadType getPayloadType();
+
+  @Override
+  public boolean isReliable() {
+    return isReliable;
+  }
 
   /**
    * The types of payloads that can be sent in data packets

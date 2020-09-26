@@ -1,9 +1,6 @@
 package me.nullicorn.amongus.protocol.common.packet;
 
 import io.netty.buffer.ByteBuf;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import me.nullicorn.amongus.protocol.common.api.packet.Hello;
 import me.nullicorn.amongus.protocol.common.util.ByteBufUtil;
 
@@ -12,15 +9,15 @@ import me.nullicorn.amongus.protocol.common.util.ByteBufUtil;
  *
  * @author Nullicorn
  */
-@NoArgsConstructor
 public class HelloPacket implements Hello {
 
   // Possibly the sender's version number
   private static final byte[] UNKNOWN_BYTES = new byte[]{0x00, 0x46, (byte) 0xD2, 0x02, 0x03};
 
-  @Getter
-  @Setter
   private String message;
+
+  public HelloPacket() {
+  }
 
   public HelloPacket(String message) {
     this.message = message;
@@ -41,6 +38,16 @@ public class HelloPacket implements Hello {
   @Override
   public boolean isReliable() {
     return true;
+  }
+
+  @Override
+  public String getMessage() {
+    return message;
+  }
+
+  @Override
+  public void setMessage(String message) {
+    this.message = message;
   }
 
   @Override

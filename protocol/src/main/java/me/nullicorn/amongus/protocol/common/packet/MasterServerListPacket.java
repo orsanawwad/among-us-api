@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.NoArgsConstructor;
 import me.nullicorn.amongus.protocol.common.MasterServerMeta;
 import me.nullicorn.amongus.protocol.common.api.ServerMeta;
 import me.nullicorn.amongus.protocol.common.api.packet.MasterServerList;
@@ -17,10 +16,14 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Nullicorn
  */
-@NoArgsConstructor
 public class MasterServerListPacket implements MasterServerList {
 
   private List<ServerMeta> serverList;
+
+
+  public MasterServerListPacket() {
+    // Required for deserialization
+  }
 
   public MasterServerListPacket(@NotNull List<ServerMeta> serverList) {
     this.serverList = serverList;

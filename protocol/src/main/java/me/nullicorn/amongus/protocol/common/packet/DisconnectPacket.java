@@ -2,9 +2,6 @@ package me.nullicorn.amongus.protocol.common.packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import me.nullicorn.amongus.protocol.common.api.packet.Disconnect;
 import me.nullicorn.amongus.protocol.common.util.ByteBufUtil;
 import org.jetbrains.annotations.Nullable;
@@ -14,15 +11,10 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Nullicorn
  */
-@AllArgsConstructor
 public class DisconnectPacket implements Disconnect {
 
-  @Getter
-  @Setter
   private int reason;
 
-  @Getter
-  @Setter
   @Nullable
   private String message;
 
@@ -33,6 +25,11 @@ public class DisconnectPacket implements Disconnect {
   public DisconnectPacket(@Nullable String reason) {
     // Disconnects with messages always seem to use 0x08
     this(8, reason);
+  }
+
+  public DisconnectPacket(int reason, @Nullable String message) {
+    this.reason = reason;
+    this.message = message;
   }
 
   @Override
@@ -80,6 +77,27 @@ public class DisconnectPacket implements Disconnect {
   @Override
   public boolean hasMessage() {
     return getReason() == 8;
+  }
+
+  @Override
+  public int getReason() {
+    return reason;
+  }
+
+  @Override
+  public void setReason(int reason) {
+    this.reason = reason;
+  }
+
+  @Override
+  @Nullable
+  public String getMessage() {
+    return message;
+  }
+
+  @Override
+  public void setMessage(@Nullable String message) {
+    this.message = message;
   }
 
   @Override

@@ -1,7 +1,6 @@
 package me.nullicorn.amongus.protocol.common.api;
 
 import java.nio.charset.StandardCharsets;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -62,7 +61,6 @@ public class GameCode {
   /**
    * The value of this game code stored as an integer
    */
-  @Getter
   private final int value;
 
   /**
@@ -97,6 +95,13 @@ public class GameCode {
     } else {
       throw new IllegalArgumentException("Invalid game code: " + codeStr);
     }
+  }
+
+  /**
+   * @see #value
+   */
+  public int getValue() {
+    return value;
   }
 
   @Override

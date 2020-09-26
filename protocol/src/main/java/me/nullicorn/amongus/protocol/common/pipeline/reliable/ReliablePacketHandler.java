@@ -96,7 +96,7 @@ public class ReliablePacketHandler extends ChannelDuplexHandler {
       @Override
       public void run() {
         // If the packet was acknowledged, remove it from the unack'd list and end this repeating task
-        if (pending.isAcknowledged()) {
+        if (pending.isAcknowledged().get()) {
           cancel();
           pendingPackets.remove(pending.getId());
           return;
@@ -121,7 +121,7 @@ public class ReliablePacketHandler extends ChannelDuplexHandler {
   private void handleAcknowledgement(int id) {
     PendingPacket pending = pendingPackets.remove(id);
     if (pending != null) {
-      pending.setAcknowledged(true);
+      pending.isAcknowledged().set(true);
     }
   }
 }

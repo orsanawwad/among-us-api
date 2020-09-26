@@ -1,6 +1,5 @@
 package me.nullicorn.amongus.protocol.common.api.packet;
 
-import lombok.Getter;
 import me.nullicorn.amongus.protocol.common.api.ByteBufSerializable;
 
 /**
@@ -15,7 +14,6 @@ public interface Packet extends ByteBufSerializable {
   /**
    * Types of packets that can be sent
    */
-  @Getter
   enum Type {
     NORMAL(0x00),
     RELIABLE(0x01, true),
@@ -42,6 +40,20 @@ public interface Packet extends ByteBufSerializable {
     Type(int id, boolean isReliable) {
       this.id = id;
       this.isReliable = isReliable;
+    }
+
+    /**
+     * @see #id
+     */
+    public int getId() {
+      return id;
+    }
+
+    /**
+     * @see #isReliable
+     */
+    public boolean isReliable() {
+      return isReliable;
     }
 
     /**

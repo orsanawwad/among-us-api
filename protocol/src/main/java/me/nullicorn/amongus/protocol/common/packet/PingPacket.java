@@ -1,7 +1,6 @@
 package me.nullicorn.amongus.protocol.common.packet;
 
 import io.netty.buffer.ByteBuf;
-import lombok.NoArgsConstructor;
 import me.nullicorn.amongus.protocol.common.api.packet.Ping;
 
 /**
@@ -9,7 +8,6 @@ import me.nullicorn.amongus.protocol.common.api.packet.Ping;
  *
  * @author Nullicorn
  */
-@NoArgsConstructor
 public class PingPacket implements Ping {
 
   @Override
