@@ -11,7 +11,7 @@ import me.nullicorn.amongus.protocol.common.api.packet.Hello;
 import me.nullicorn.amongus.protocol.common.api.packet.Packet;
 import me.nullicorn.amongus.protocol.common.api.packet.Packet.Type;
 import me.nullicorn.amongus.protocol.common.api.packet.Ping;
-import me.nullicorn.amongus.protocol.common.packet.DataPacket.PayloadType;
+import me.nullicorn.amongus.protocol.common.packet.RequestPacket.RequestType;
 import me.nullicorn.amongus.protocol.common.pipeline.reliable.PendingPacket;
 import me.nullicorn.amongus.protocol.common.util.ByteBufUtil;
 
@@ -47,9 +47,9 @@ public class PacketEncoder extends MessageToByteEncoder<Packet> {
       try {
         packet.serialize(payloadOut);
 
-        // Write the packet's size, payload type, and the actual payload
+        // Write the packet's size, request type, and the actual payload
         out.writeShortLE(payloadOut.writerIndex());
-        out.writeByte(PayloadType.fromPacket(packet).getId());
+        out.writeByte(RequestType.fromPacket(packet).getId());
         out.writeBytes(payloadOut);
       } finally {
         payloadOut.release();

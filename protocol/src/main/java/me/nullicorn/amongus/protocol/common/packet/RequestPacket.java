@@ -6,19 +6,19 @@ import me.nullicorn.amongus.protocol.common.api.ProtocolException;
 import me.nullicorn.amongus.protocol.common.api.packet.Packet;
 
 /**
- * A packet sent for a particular game event / action
+ * A packet sent for a particular event / action
  *
  * @author Nullicorn
  */
-public abstract class DataPacket implements Packet {
+public abstract class RequestPacket implements Packet {
 
   protected boolean isReliable;
 
-  public DataPacket(boolean isReliable) {
+  public RequestPacket(boolean isReliable) {
     this.isReliable = isReliable;
   }
 
-  abstract PayloadType getPayloadType();
+  abstract RequestType getRequestType();
 
   @Override
   public boolean isReliable() {
@@ -26,17 +26,17 @@ public abstract class DataPacket implements Packet {
   }
 
   /**
-   * The types of payloads that can be sent in data packets
+   * The types of requests that can be sent in data packets
    */
-  public enum PayloadType {
+  public enum RequestType {
     MASTER_SERVER_LIST(0x0E, MasterServerListPacket.class);
 
-    private static final Int2ObjectMap<PayloadType> payloadById = new Int2ObjectOpenHashMap<>();
+    private static final Int2ObjectMap<RequestType> payloadById = new Int2ObjectOpenHashMap<>();
 
     private final int                     id;
     private final Class<? extends Packet> packetClass;
 
-    PayloadType(int id, Class<? extends Packet> packetClass) {
+    RequestType(int id, Class<? extends Packet> packetClass) {
       this.id = id;
       this.packetClass = packetClass;
     }
@@ -56,22 +56,22 @@ public abstract class DataPacket implements Packet {
     }
 
     /**
-     * Reverse lookup a payload types by its protocol ID
+     * Reverse lookup a request type by its protocol ID
      */
-    public static PayloadType fromId(int id) {
+    public static RequestType fromId(int id) {
       return payloadById.get(id);
     }
 
     /**
-     * Get the payload type of a packet
+     * Get the request type of a packet
      */
-    public static PayloadType fromPacket(Packet packet) {
+    public static RequestType fromPacket(Packet packet) {
       if (packet == null) {
         throw new IllegalArgumentException("Cannot get payload ID of null packet");
-      } else if (!(packet instanceof DataPacket)) {
-        throw new IllegalArgumentException("Cannot get payload type of non DataPacket: " + packet.getClass().getSimpleName());
+      } else if (!(packet instanceof RequestPacket)) {
+        throw new IllegalArgumentException("Cannot get request type of non DataPacket: " + packet.getClass().getSimpleName());
       }
-      return ((DataPacket) packet).getPayloadType();
+      return ((RequestPacket) packet).getRequestType();
     }
 
     public Packet createPacketInstance() {
@@ -84,7 +84,7 @@ public abstract class DataPacket implements Packet {
     }
 
     static {
-      for (PayloadType type : values()) {
+      for (RequestType type : values()) {
         payloadById.put(type.getId(), type);
       }
     }

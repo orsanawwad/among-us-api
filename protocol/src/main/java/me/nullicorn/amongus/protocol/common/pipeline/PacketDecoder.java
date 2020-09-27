@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 import me.nullicorn.amongus.protocol.common.api.packet.Packet;
 import me.nullicorn.amongus.protocol.common.api.packet.Packet.Type;
 import me.nullicorn.amongus.protocol.common.packet.AcknowledgementPacket;
-import me.nullicorn.amongus.protocol.common.packet.DataPacket.PayloadType;
 import me.nullicorn.amongus.protocol.common.packet.DisconnectPacket;
 import me.nullicorn.amongus.protocol.common.packet.HelloPacket;
 import me.nullicorn.amongus.protocol.common.packet.PingPacket;
+import me.nullicorn.amongus.protocol.common.packet.RequestPacket.RequestType;
 import me.nullicorn.amongus.protocol.common.pipeline.reliable.PendingPacket;
 
 /**
@@ -43,20 +43,20 @@ public class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
         // Ignore packet length field
         int payloadLength = in.readUnsignedShortLE();
 
-        // Read payload type
-        int payloadTypeId = in.readUnsignedByte();
-        PayloadType payloadType = PayloadType.fromId(payloadTypeId);
+        // Read request type
+        int requestTypeId = in.readUnsignedByte();
+        RequestType requestType = RequestType.fromId(requestTypeId);
 
         // Swap out the entire buffer for just the payload buffer
         in = in.readBytes(payloadLength);
 
-        if (payloadType != null) {
-          packet = payloadType.createPacketInstance();
+        if (requestType != null) {
+          packet = requestType.createPacketInstance();
           if (type == Type.RELIABLE) {
             packet = new PendingPacket(packet, reliableId);
           }
         } else {
-          logger.warning("Received data packet with unknown payload type: " + payloadTypeId);
+          logger.warning("Received packet with unknown request type: " + requestTypeId);
           return;
         }
         break;
